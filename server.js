@@ -127,7 +127,7 @@ app.post("/api/colors", authenticator, (req, res) => {
     colors.push(newcolor)
   }
   nextId = nextId + 1
-  res.status(201).json(colors)
+  res.status(201).send(colors)
 })
 
 app.put("/api/colors/:id", authenticator, (req, res) => {
