@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import axios from "axios"
 import { axiosWithAuth } from './axiosWithAuth'
 
 const initialColor = {
@@ -20,28 +19,20 @@ const ColorList = (props) => {
 
   const saveEdit = (e) => {
     e.preventDefault()
-    console.log('SaveEdit--> ', colorToEdit.id)
     axiosWithAuth()
       .put(`/colors/${colorToEdit.id}`, colorToEdit)
       .then(res => updateColors(res.data))
       .catch(err => console.log('Error with updating: ', err))
   }
   const deleteColor = e => {
-    // make a delete request to delete this color
     axiosWithAuth()
       .delete(`/colors/${e.target.id}`)
       .then(res => updateColors(res.data))
       .catch(err => console.log('Error deleting: ', err))
   }
 
-  const handleNew = e => {
-    console.log('handleNew --> ', newColor)
-    setNewColor({ color: e.target.value, code: { hex: e.target.value } })
-  }
-
   const addNew = e => {
     e.preventDefault()
-    console.log('Add new function ', newColor)
     axiosWithAuth()
       .post(`/colors`, newColor)
       .then(res => updateColors(res.data))
@@ -100,13 +91,11 @@ const ColorList = (props) => {
           </div>
         </form>
       )}
-      {/* <div className="spacer" /> */}
-      {/* stretch - build another form here to add a color */}
       <form style={{ alignItems: 'center' }} onSubmit={e => addNew(e)}>
-        <input type="text" value={newColor.color} onChange={e => setNewColor({ ...newColor, color: e.target.value })} name="color" placeholder="New Color Name" />
+        <input type="text" value={newColor.color} onChange={e => setNewColor({ ...newColor, color: e.target.value })} placeholder="New Color Name" />
 
 
-        <input type="text" value={newColor.code.hex} onChange={e => setNewColor({ ...newColor, code: { hex: e.target.value } })} name="code" placeholder="Hex" />
+        <input type="text" value={newColor.code.hex} onChange={e => setNewColor({ ...newColor, code: { hex: e.target.value } })} placeholder="Hex" />
 
 
         <input type="submit" value="Add!" />
