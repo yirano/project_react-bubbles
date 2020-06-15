@@ -6,6 +6,7 @@ import BubblePage from './components/BubblePage'
 import "./styles.scss"
 
 function App() {
+
   return (
     <Router>
       <div className="App">

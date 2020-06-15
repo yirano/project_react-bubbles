@@ -15,12 +15,17 @@ const BubblePage = () => {
         setColorList(res.data)
       })
   }, [])
-
+  const deleteColor = e => {
+    axiosWithAuth()
+      .delete(`/colors/${e.target.id}`)
+      .then(res => setColorList(res.data))
+      .catch(err => console.log('Error deleting: ', err))
+  }
 
   return (
     <>
       <ColorList colors={colorList} updateColors={setColorList} />
-      <Bubbles colors={colorList} />
+      <Bubbles colors={colorList} deleteColor={deleteColor} />
     </>
   )
 }
