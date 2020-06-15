@@ -15,17 +15,15 @@ const ColorList = (props) => {
   const editColor = color => {
     setEditing(true)
     setColorToEdit(color)
-    console.log(color)
   }
 
   const saveEdit = (e) => {
     e.preventDefault()
+    console.log('SaveEdit--> ', colorToEdit.id)
     axiosWithAuth()
-      .put(`/colors${e.target.id}`)
-      .then(res => console.log(res))
-    // Make a put request to save your updated color
-    // think about where will you get the id from...
-    // where is is saved right now?
+      .put(`/colors/${colorToEdit.id}`, colorToEdit)
+      .then(res => updateColors(res.data))
+      .catch(err => console.log('Error with updating: ', err))
   }
   const deleteColor = e => {
     // make a delete request to delete this color
@@ -42,7 +40,7 @@ const ColorList = (props) => {
       <p>colors</p>
       <ul>
         {colors.map(color => (
-          <li key={color.color} id={color.id} onClick={(e) => editColor(color)}>
+          <li key={color.color} id={color.id} onClick={() => editColor(color)}>
             <span id={color.id}>
               <span className="delete" id={color.id} onClick={e => {
                 e.stopPropagation()
@@ -61,7 +59,7 @@ const ColorList = (props) => {
         ))}
       </ul>
       {editing && (
-        <form onSubmit={saveEdit}>
+        <form onSubmit={e => saveEdit(e)}>
           <legend>edit color</legend>
           <label>
             color name:

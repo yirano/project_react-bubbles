@@ -144,7 +144,7 @@ app.put("/api/colors/:id", authenticator, (req, res) => {
     }
     return color
   })
-  res.status(200).send(req.body)
+  res.status(200).send(colors)
 })
 
 app.delete("/api/colors/:id", authenticator, (req, res) => {
